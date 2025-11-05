@@ -7,7 +7,11 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "https://infohub-frontendnew.vercel.app",
+  methods: ["GET"],
+  credentials: true
+}));
 app.use(express.json());
 
 // Mock quotes array (can be replaced with API call)

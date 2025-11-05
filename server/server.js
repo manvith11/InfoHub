@@ -118,9 +118,13 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'InfoHub API is running' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/api/health`);
-});
+// Start server only when run directly (local dev). On Vercel, we export the app.
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`Health check: http://localhost:${PORT}/api/health`);
+  });
+}
+
+module.exports = app;
 

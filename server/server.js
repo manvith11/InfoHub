@@ -7,12 +7,26 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://infohub-frontendnew.vercel.app'
+  // Add GitHub Pages domain if you deploy there, for example:
+  // 'https://<username>.github.io/<repo-name>'
+];
+
 app.use(cors({
-  origin: "https://infohub-frontendnew.vercel.app",
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
-  credentials: true
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl) and allowed origins
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+  credentials: false
 }));
+
 app.use(express.json());
 
 // Mock quotes array (can be replaced with API call)

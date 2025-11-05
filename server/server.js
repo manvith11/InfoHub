@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(cors({
   origin: "https://infohub-frontendnew.vercel.app",
-  methods: ["GET"],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
   credentials: true
 }));
 app.use(express.json());
